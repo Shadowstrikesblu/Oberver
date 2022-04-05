@@ -7,6 +7,8 @@ package com.fges.fges_plage;
 
 import java.util.List;
 import java.util.ArrayList;
+
+import com.fges.fges_plage.Inter.DonneeStationObserver;
 import com.fges.fges_plage.widgets.*;
 
 /**
@@ -29,7 +31,10 @@ public class App {
         widgets.add(new WidgetDrapeau(donneeStation));
         widgets.add(new WidgetQualiteEau(donneeStation));
         widgets.add(new WidgetTemperature(donneeStation));
-        
+        DonneeStationObservableImpl observable = new DonneeStationObservableImpl();
+        for(Widget widget : widgets){
+            observable.enregistrerObservateur((DonneeStationObserver) widget);
+        }
         /// Affichage des mises à jour de la station
         ThreadStationMeteo threadStationMeteo = new ThreadStationMeteo(station);
         threadStationMeteo.start();
